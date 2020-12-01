@@ -82,6 +82,7 @@
     <Content Include="ProductosPorTipoVer.aspx" />
     <Content Include="ProductosVer.aspx" />
     <Content Include="Registrarse.aspx" />
+    <Content Include="Tipos.aspx" />
     <Content Include="TiposVer.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -166,6 +167,13 @@
     </Compile>
     <Compile Include="Registrarse.aspx.designer.cs">
       <DependentUpon>Registrarse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos.aspx.cs">
+      <DependentUpon>Tipos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos.aspx.designer.cs">
+      <DependentUpon>Tipos.aspx</DependentUpon>
     </Compile>
     <Compile Include="TiposVer.aspx.cs">
       <DependentUpon>TiposVer.aspx</DependentUpon>
