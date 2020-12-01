@@ -93,7 +93,46 @@ namespace GesTienda
 
         protected void btnActualizar_Click(object sender, EventArgs e)
         {
+            if (txtDescripcion.Text == "")
+            {
+                lblMensajes.Text = "El campo descripción está vacío";
+            }
+            else
+            {
+                lblMensajes.Text = "";
+                string error;
+                string id = txtID.Text;
+                string descripcion = txtDescripcion.Text;
+                string cadena = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                string instruccion = $"UPDATE TIPO SET DesTip = '{descripcion}' WHERE IdTipo = '{id}';";
+                using (SqlConnection con = new SqlConnection(cadena))
+                {
+                    try
+                    {
+                        con.Open();
+                        SqlCommand comando = con.CreateCommand();
+                        comando.CommandText = instruccion;
 
+                        int filasafectadas = comando.ExecuteNonQuery();
+                        if (filasafectadas == 1)
+                        {
+                            lblMensajes.Text = "El tipo se ha actualizado correctamente";
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "Ha habido un error al actualizar el tipo";
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        error = "No se ha podido conectar con la base de datos";
+                        error += "<div> Código: " + ex.Number + "</div>";
+                        error += "<div> Descripción: " + ex.Message + "</div>";
+                        lblMensajes.Text = error;
+                        return;
+                    }
+                }
+            }            
         }
     }
 }
