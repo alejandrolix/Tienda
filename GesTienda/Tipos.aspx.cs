@@ -55,7 +55,40 @@ namespace GesTienda
 
         protected void btnBorrar_Click(object sender, EventArgs e)
         {
+            lblMensajes.Text = "";
+            string error;
+            string id = txtID.Text;
+            string descripcion = txtDescripcion.Text;
+            string cadena = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            string instruccion = $"DELETE TIPO WHERE IdTipo = '{id}'";
 
+            using (SqlConnection con = new SqlConnection(cadena))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand comando = con.CreateCommand();
+                    comando.CommandText = instruccion;
+
+                    int filasafectadas = comando.ExecuteNonQuery();
+                    if (filasafectadas == 1)
+                    {
+                        lblMensajes.Text = "El tipo se ha borrado";
+                    }
+                    else
+                    {
+                        lblMensajes.Text = "Ha habido un error al borrar el tipo";
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    error = "No se ha podido conectar con la base de datos";
+                    error += "<div> Código: " + ex.Number + "</div>";
+                    error += "<div> Descripción: " + ex.Message + "</div>";
+                    lblMensajes.Text = error;
+                    return;
+                }
+            }
         }
 
         protected void btnActualizar_Click(object sender, EventArgs e)
